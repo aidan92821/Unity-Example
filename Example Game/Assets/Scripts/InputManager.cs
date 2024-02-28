@@ -21,20 +21,20 @@ public class InputManager : MonoBehaviour
 
         // Any time OnFoot.Jump is performed, a callback context (ctx) is used to call motor.Jump() function
         onFoot.Jump.performed += ctx => motor.Jump();
+
+        onFoot.Crouch.performed += ctx => motor.Crouch();
+        onFoot.Sprint.performed += ctx => motor.Sprint();
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         // Tell the PlayerMotor to move using the value from our movement action
         motor.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+        look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
 
-    private void LateUpdate()
-    {
-         look.ProcessLook(onFoot.Look.ReadValue<Vector2>());
-    }
-
+    
     private void OnEnable()
     {
         onFoot.Enable();
